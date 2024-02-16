@@ -1,0 +1,29 @@
+<?php
+session_start();
+
+// Check if the admin is logged in, if not then redirect them to login page
+if(!isset($_SESSION["admin"]) || $_SESSION["admin"] !== true){
+    header("location: login.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Book</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Add New Book</h2>
+        <form action="addbook.php" method="post">
+            <div class="form-group">
+                <label>Book Name</label>
+                <input type="text" name="bookname" class="form-control" required id="title>
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" name="author" class="form-control" required id="author">
+            </div> 
+
+
