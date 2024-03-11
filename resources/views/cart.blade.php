@@ -3,17 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Cart</title>
 </head>
 <body>
-    @foreach ($books as $book)
-        <p>{{ $book->title }} - ${{ $book->price }}</p>
-        <form action="{{ route('cart.destroy', $book->id) }}" method="POST">
+<header>
+        <a href="/books">Back to store</a>
+    </header>
+    @foreach ($cartItems as $cartItem)
+        <p>{{ $cartItem->title }} by {{ $cartItem->author }} - ${{ $cartItem->price }}</p>
+        <form action="/cart" method="post">
             @csrf
-            @method('DELETE')
-            <button type="submit">Remove</button>
+            @method('delete')
+            <input type="hidden" name="id" value="{{ $cartItem->id }}">
+            <button type="submit">Remove from Cart</button>
         </form>
     @endforeach
+
     <p>Subtotal: ${{ $subtotal }}</p>
+
 </body>
 </html>

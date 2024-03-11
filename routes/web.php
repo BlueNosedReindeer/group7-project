@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
 
 /*
@@ -18,5 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Book routes
+Route::get('/books', [BookController::class, 'index']);
+
 // Shopping cart routes
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart', [CartController::class, 'add']);
+Route::delete('/cart', [CartController::class, 'remove']);
+
+
+

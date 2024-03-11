@@ -4,33 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Book;
+
 
 class CartController extends Controller
 {
-    // index: show all books in cart and calculate subtotal
     public function index()
     {
-        $books = Cart::all();
+        $cartItems = Cart::all();
         $subtotal = Cart::sum('price');
-        return view('cart', compact('books', 'subtotal'));
+        return view('cart', compact('cartItems', 'subtotal'));
     }
 
-    // store: add book to cart
-    public function store(Request $request)
+    public function add(Request $request)
     {
         $book = Book::find($request->id);
-        Cart::create([
+        
+        $cartItem = Cart::create([
             'title' => $book->title,
-            'price' => $book->price,
-            // Fill in rest
+            'author' => $book->author,
+            'price' => $book->price
         ]);
-        return redirect()->route('cart');
+
+        return redirect('/cart');
     }
 
-    // destroy:remove book from cart
-    public function destroy($id)
+    public function remove(Request $request)
     {
-        Cart::destroy($id);
-        return redirect()->route('cart');
+        $cartItem = Cart::find($request->id);
+        $cartItem->delete();
+
+        return redirect('/cart');
     }
 }

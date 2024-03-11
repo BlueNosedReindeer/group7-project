@@ -8,8 +8,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
+
+    public $table = 'user';
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function cart()
+{
+    return $this->hasOne(Cart::class);
+}
+
+
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
