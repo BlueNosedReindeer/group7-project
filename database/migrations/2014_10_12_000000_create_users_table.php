@@ -29,7 +29,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        $table->dropForeign(['cart_id']);
-            $table->dropColumn('cart_id');
+        // $table->dropForeign(['cart_id']);
+        //     $table->dropColumn('cart_id');
     }
 };
