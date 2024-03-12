@@ -11,22 +11,20 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('book_ratings', function (Blueprint $table) {
+        Schema::create('create_comments', function (Blueprint $table) {
             $table->id();
-            $table->string('Rating');
+            $table->string('Comment');
             $table->string('userId');
             $table->string('bookId');
             $table->timestamps();
         });
     }
 
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('create_comments');
     }
 };

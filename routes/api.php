@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookRatingController;
 use App\Http\Models\BookRating;
+use App\Http\Models\CreateComment;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('CreateRating',[BookRatingController::class, 'CreateRating']);//adding a bookrating to database API -- POST METHOD-- 
-//Route::apiResource(‘bookratings’, BookRatingController::class);
-//Route::apiResource(‘ratings’, BookRatingController::class);
+Route::post('CreateComment',[BookRatingController::class, 'CreateComment']);
