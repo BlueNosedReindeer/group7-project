@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // book details routes
-Route::post('/book', 'BookController@store');
-Route::get('/book/{isbn}', 'BookController@show');
+//Route::post('/book', 'BookDetailController@store');
+//Route::get('books/{book}', [BookDetailController::class, 'show']);
+//Route::get('books', [BookDetailController::class, 'index']);
+Route::apiResource('books', BookDetailController::class);
+//Route::post('books/{book}', [BookDetailController::class, 'store']);

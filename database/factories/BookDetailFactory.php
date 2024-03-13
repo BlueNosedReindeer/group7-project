@@ -25,7 +25,7 @@ class BookDetailFactory extends Factory
             'genre' => $this->faker->word(),
             'description' => $this->faker->paragraph(),
             'price' => $this->faker->randomFloat(2, 0, 100),
-            'copies_sold' => $this->faker->numberBetween(0, 1000),
+            'copies_sold' => $this->faker->numberBetween(0, 1000)
             //
         ];
     }

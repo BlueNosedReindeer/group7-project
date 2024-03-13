@@ -13,14 +13,15 @@ class BookDetailController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(BookDetail::all());
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request) // store details when adding new
-    { $validatedData = $request->validate([
+    { 
+        $validatedData = $request->validate([
         'isbn' => 'required|numeric',
         'title' => 'required',
         'author' => 'required',
@@ -32,35 +33,18 @@ class BookDetailController extends Controller
         'copies_sold' => 'required|numeric',
         //
     ]);
-    $book = new BookDetail();
-    $book->isbn = $validatedData['isbn'];
-    $book->title = $validatedData['title'];
-    $book->author = $validatedData['author'];
-    $book->publisher = $validatedData['publisher'];
-    $book->publication_year = $validatedData['publication_year'];
-    $book->genre = $validatedData['genre'];
-    $book->description = $validatedData['description'];
-    $book->price = $validatedData['price'];
-    $book->copies_sold = $validatedData['copies_sold'];
-    $book->save();
+    $book = BookDetail::create($validatedData);
 
-    return response()->json('Book details saved!');
+    return response()->json(['message' => 'Book details saved!', 'book' => $book], 201);
 }
 
     /**
      * Display the specified resource.
      */
-    public function show($isbn): JsonResponse //
+    public function show($isbn) //
     {
-        $book = BookDetail::where('isbn', $isbn->isbn)->first();
+        return BookDetail::where('isbn', $isbn)->firstOrFail();
 
-        if (!$book) {
-            return response()->json([
-                'message' => 'Book not found'
-            ], 404);
-        }
-
-        return response()->json($book);
     }
 
     /**
