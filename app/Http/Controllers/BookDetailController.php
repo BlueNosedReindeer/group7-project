@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookDetail;
+use App\Models\Author;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,20 @@ class BookDetailController extends Controller
     public function show($isbn) //
     {
         return BookDetail::where('isbn', $isbn)->firstOrFail();
+
+    }
+
+    public function createAuthor(Request $request) // creating author profile
+    {
+        $validatedData = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'biography' => 'required',
+            'publisher' => 'required',
+        ]);
+        $author = Author::create($validatedData);
+        return response()->json(['message' => 'Author profile created!', 'author' => $author], 201);
+        // return BookDetail::where('author', $author)->firstOrFail();
 
     }
 
