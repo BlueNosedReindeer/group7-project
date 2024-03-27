@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Book;
 
 class CartController extends Controller
 {
@@ -21,25 +22,28 @@ class CartController extends Controller
         ]);
     }
 
-    public function add(Request $request, $user)
-    {
-        // Validate request
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'author' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
+    public function add(Request $request, $user, $item)
+{
+    $userModel = User::findOrFail($user); // user id
 
-        $cartItem = User::findOrFail($user)->carts()->create($validatedData);
+    $book = Book::findOrFail($item); // book id
 
-        return response()->json(['message' => 'Item added to cart successfully'], 201);
-    }
+    $cartItem = $userModel->carts()->create([
+        'book_id' => $book->id,
+        'title' => $book->title,
+        'author' => $book->author,
+        'price' => $book->price,
+    ]);
+
+    return response()->json(['message' => 'Item added to cart'], 201);
+}
+
 
     public function remove($user, $item)
     {
         $cartItem = Cart::where('user_id', $user)->findOrFail($item);
         $cartItem->delete();
 
-        return response()->json(['message' => 'Item removed from cart successfully']);
+        return response()->json(['message' => 'Item removed']);
     }
 }
