@@ -34,9 +34,28 @@ class BookDetailController extends Controller
         'copies_sold' => 'required|numeric',
         //
     ]);
+    //split author name into first and last name
+    $authorName = explode(' ', $validatedData['author'], 2);
+    $firstName = $authorName[0];
+    $lastName = $authorName[1] ?? '';
+    //create author
+    $author = Author::firstWhere([
+    'first_name' => $firstName,
+    'last_name' => $lastName,
+    ]);
+
+    if ($author === null) {
+        return response()->json(['message' => 'Author does not exist! Please create Author Profile & Try Again! :)'], 404); 
+    }
+    //unset author from validated data
+    unset($validatedData['author']);
+    //set author_id to author's id
+    $validatedData['author_id'] = $author->id;
+    //create book
     $book = BookDetail::create($validatedData);
 
     return response()->json(['message' => 'Book details saved!', 'book' => $book], 201);
+    
 }
 
     /**
@@ -58,23 +77,29 @@ class BookDetailController extends Controller
         ]);
         $author = Author::create($validatedData);
         return response()->json(['message' => 'Author profile created!', 'author' => $author], 201);
-        // return BookDetail::where('author', $author)->firstOrFail();
-
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BookDetail $bookDetail)
+    public function getBooks ($id) // get books by author
     {
-        //
-    }
+      // Retrieve the author by their ID
+    $author = Author::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(BookDetail $bookDetail)
+    // Retrieve books associated with the author
+    $books = $author->books;
+
+    // Return the list of books
+    return response()->json($books);
+    }
+    
+    
+    public function getAuthorbyID($id) // get author by id
     {
-        //
+        $author = Author::where('id', $id)->firstOrFail();
+        $books = $author->books;
+        return response()->json([
+            'message' => 'Author profile retrieved!',
+            'author' => $author->books
+        ]);
+
     }
 }

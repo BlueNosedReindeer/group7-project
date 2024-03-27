@@ -19,9 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // book details routes
-//Route::post('/book', 'BookDetailController@store');
-//Route::get('books/{book}', [BookDetailController::class, 'show']);
-//Route::get('books', [BookDetailController::class, 'index']);
 Route::apiResource('books', BookDetailController::class);
 Route::post('books/authors', [BookDetailController::class, 'createAuthor']);
-//Route::post('books/{book}', [BookDetailController::class, 'store']);
+//Route::apiResource('getbooks', BookDetailController::class)->only('index', 'show');
+//Route::apiResource('authors', BookDetailController::class);
+Route::get('authors/{id}', [BookDetailController::class, 'getAuthorByID']);
+Route::get('authors/{id}/books', [BookDetailController::class, 'getBooks']);
+
