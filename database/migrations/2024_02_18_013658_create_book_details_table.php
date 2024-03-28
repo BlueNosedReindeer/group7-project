@@ -15,15 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('isbn');
             $table->string('title');
+            //$table->string('author');
             $table->string('publisher');
             $table->integer('publication_year');
             $table->string('genre');
             $table->text('description');
             $table->decimal('price', 8, 2);
-            $table->integer('copies_sold');   
+            $table->integer('copies_sold');
             $table->timestamps();
-            $table->unsignedBigInteger('author_id')->nullable();
-            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
+            //$table->unsignedBigInteger('author_id')->nullable();
+            //$table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
         });
     }
 
@@ -34,5 +35,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('book_details');
     }
-    
 };
