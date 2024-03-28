@@ -22,11 +22,10 @@ class ProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|min:3|max:15|unique:profile,username',
+            'username' => 'required|string|min:3|max:15|unique:profiles,username',
             'password' => 'required|string|min:8|max:20',
-            'first_name' => 'nullable|string|max:50',
-            'last_name' => 'nullable|string|max:50',
-            'email' => 'nullable|string|email|max:255|unique:profile,email',
+            'name' => 'nullable|string|max:50',
+            'email' => 'nullable|string|email|max:255|unique:profiles,email',
             'address' => 'nullable|string|max:255',
             'home_address' => 'nullable|string|max:255'
         ];

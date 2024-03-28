@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreditCardRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 use App\Services\ProfileService;
-use Illuminate\Http\Request;
+use Exception;
 
 class ProfileController extends Controller
 {
     protected $profileService;
 
     /**
-     * @param ProfileService $profileService
+     * Injects profile service class
      *
-     * Inject ProfileService into controller
+     * @param ProfileService $profileService
      */
     public function __construct(ProfileService $profileService)
     {
@@ -22,58 +23,51 @@ class ProfileController extends Controller
     }
 
     /**
-     * @param ProfileRequest $request
-     * @return string
-     *
      * Creates a new profile
-     */
-    public function store(ProfileRequest $request)
-    {
-        return 'success';
-    }
-
-    /**
-     * @param Profile $profile
-     * @return string
      *
-     * Display profile from given username
-     */
-    public function read(Profile $profile)
-    {
-        return 'success';
-    }
-
-    /**
      * @param ProfileRequest $request
-     * @param Profile $profile
-     * @return string
-     *
-     * Update username attributes
+     * @return void
      */
-    public function update(ProfileRequest $request, Profile $profile)
+    public function store(ProfileRequest $request): void
     {
-        return 'success';
+        $this->profileService->createNewProfile($request->validated());
     }
 
     /**
-     * @param Profile $profile
-     * @return string
+     * Displays profile when given its username
      *
-     * Deletes profile
+     * @param string $username
+     * @return Profile
+     * @throws Exception
      */
-    public function destroy(Profile $profile)
+    public function show(string $username)
     {
-        return 'success';
+        return $this->profileService->getProfileByUsername($username);
     }
 
     /**
+     * Updates any field (except email) within a profile when given its username
+     *
      * @param ProfileRequest $request
-     * @return string
-     *
-     * Stores a new credit card
+     * @param string $username
+     * @return void
+     * @throws Exception
      */
-    public function storeCreditCard (ProfileRequest $request)
+    public function update(ProfileRequest $request, string $username): void
     {
-        return 'success';
+        $this->profileService->updateProfile($request->except(['email']), $username);
+    }
+
+    /**
+     * Stores a credit card to a profile when given its username
+     *
+     * @param CreditCardRequest $request
+     * @param string $username
+     * @return void
+     * @throws Exception
+     */
+    public function storeCard(CreditCardRequest $request, string $username)
+    {
+        $this->profileService->createCreditCardForProfile($request->validated(), $username);
     }
 }

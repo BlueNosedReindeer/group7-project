@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Group routes related to profiles
+Route::prefix('profiles')->group(function () {
+    Route::post('/', [ProfileController::class, 'store']);
+    Route::get('/{username}', [ProfileController::class, 'show']);
+    Route::put('/{username}', [ProfileController::class, 'update']);
+
+    Route::post('/{username}/credit-cards', [ProfileController::class, 'storeCard']);
 });

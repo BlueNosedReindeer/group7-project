@@ -13,15 +13,14 @@ class ProfileFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition(): array
     {
         return [
             'username' => $this->faker->unique()->userName,
             'password' => Hash::make('password'),
-            'first_name' => $this->faker->name,
-            'last_name' => $this->faker->name,
+            'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'address' => $this->faker->address,
             'home_address' => $this->faker->address
