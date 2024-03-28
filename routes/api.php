@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BookDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,9 @@ Route::prefix('profiles')->group(function () {
 
     Route::post('/{username}/credit-cards', [ProfileController::class, 'storeCard']);
 });
+
+// Book details routes
+Route::apiResource('books', BookDetailController::class);
+Route::post('books/authors', [BookDetailController::class, 'createAuthor']);
+Route::get('authors/{id}', [BookDetailController::class, 'getAuthorByID']);
+Route::get('authors/{id}/books', [BookDetailController::class, 'getBooks']);

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\CreditCard;
+use App\Models\BookDetail;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         CreditCard::factory(10)->create();
+        CreditCard::factory(10)->create();
+        BookDetail::factory(10)->create();
     }
 }
