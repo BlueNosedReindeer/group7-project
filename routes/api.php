@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookDetailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,9 @@ Route::prefix('profiles')->group(function () {
     Route::post('/{username}/credit-cards', [ProfileController::class, 'storeCard']);
 });
 
+Route::get('/user/{user}/cart', [CartController::class, 'index']);
+Route::post('/user/{user}/cart/{item}', [CartController::class, 'add']);
+Route::delete('/user/{user}/cart/{item}', [CartController::class, 'remove']);
 // Book details routes
 Route::apiResource('books', BookDetailController::class);
 Route::post('books/authors', [BookDetailController::class, 'createAuthor']);
