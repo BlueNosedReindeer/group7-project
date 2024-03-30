@@ -29,4 +29,9 @@ class Profile extends Model
     {
         return $this->hasMany(CreditCard::class);
     }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

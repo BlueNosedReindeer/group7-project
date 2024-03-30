@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('isbn');
             $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('book_id');
             $table->string('title');
             $table->string('publisher');
             $table->integer('publication_year');
@@ -24,7 +25,16 @@ return new class extends Migration
             $table->integer('copies_sold');
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
+            $table->foreign('author_id')
+                ->references('id')
+                ->on('authors')
+                ->onDelete('cascade');
+
+            $table->foreign('book_id')
+                ->references('id')
+                ->on('books')
+                ->onDelete('cascade');
+            $table->unique('book_id');
         });
     }
 

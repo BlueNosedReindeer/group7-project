@@ -1,34 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Cart;
-use App\Models\User;
 use App\Models\Book;
+use App\Models\Cart;
+use App\Models\Profile;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function index($user)
+    public function index($profile)
     {
-        $cartItems = User::findOrFail($user)->carts;
+        $cartItems = Profile::findOrFail($profile)->carts;
         $subtotal = $cartItems->sum('price');
-        
+
         return response()->json([
             'cartItems' => $cartItems,
             'subtotal' => $subtotal
         ]);
     }
 
-    public function add(Request $request, $user, $item)
+    public function add(Request $request, $profile, $item)
 {
-    $userModel = User::findOrFail($user); // user id
+    $profileModel = Profile::findOrFail($profile); // profile id
 
     $book = Book::findOrFail($item); // book id
 
-    $cartItem = $userModel->carts()->create([
+    $profileModel->carts()->create([
         'book_id' => $book->id,
         'title' => $book->title,
         'author' => $book->author,
@@ -39,9 +37,9 @@ class CartController extends Controller
 }
 
 
-    public function remove($user, $item)
+    public function remove($profile, $item)
     {
-        $cartItem = Cart::where('user_id', $user)->findOrFail($item);
+        $cartItem = Cart::where('profile_id', $profile)->findOrFail($item);
         $cartItem->delete();
 
         return response()->json(['message' => 'Item removed']);
