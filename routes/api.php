@@ -15,17 +15,13 @@ use App\Http\Controllers\Api\V1\BooksController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
-    Route::apiResource('books', BooksController::class);
-    Route::get('/books/genre/{genre}', [BooksController::class, 'findByGenre']);
-    Route::get('topSellers', [BooksController::class, 'topSellers']);
-    Route::get('books/filterByRating/{rating}', [BooksController::class, 'filterByRating']);
-    Route::put('/books/discountByPublisher', [BooksController::class, 'discountByPublisher']);
-    
+Route::get('/books/genre/{genre}', [BooksController::class, 'findByGenre']);
+Route::get('topSellers', [BooksController::class, 'topSellers']);
+Route::get('books/filterByRating/{rating}', [BooksController::class, 'filterByRating']);
+Route::put('/books/discountByPublisher', [BooksController::class, 'discountByPublisher']);
+
 
 
 

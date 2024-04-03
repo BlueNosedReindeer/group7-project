@@ -6,8 +6,6 @@ use App\Http\Requests\StoreBooksRequest;
 use App\Http\Requests\UpdateBooksRequest;
 use App\Models\Books;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -27,7 +25,7 @@ class BooksController extends Controller
     {
         // Retrieve the books with the specified genre
         $books = Books::where('Genre', $genre)->get();
-    
+
         return $books;
     }
 
@@ -61,7 +59,7 @@ public function filterByRating($rating)
 /**
  * Discount books by publisher
  */
- 
+
  public function discountByPublisher(Request $request)
  {
      // Validate the request parameters
@@ -74,15 +72,15 @@ public function filterByRating($rating)
      // Retrieve discount percent and publisher from the request
      $discountPercent = $request->input('discount_percent');
      $publisher = $request->input('publisher');
- 
+
      // Apply the discount to books under the specified publisher
-     $books = Book::where('publisher', $publisher)->get();
+     $books = Books::where('publisher', $publisher)->get();
 
      foreach ($books as $book) {
          $book->price = $book->price * $discountPercent;
          $book->save();
      }
- 
+
      // Optionally, you can return a response indicating success
      return response()->json(['message' => 'Books discounted successfully']);
  }
