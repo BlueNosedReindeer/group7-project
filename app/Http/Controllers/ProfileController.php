@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreditCardRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
+use App\Services\ProfileCreateRequest;
 use App\Services\ProfileService;
 use Exception;
 
@@ -25,10 +26,10 @@ class ProfileController extends Controller
     /**
      * Creates a new profile
      *
-     * @param ProfileRequest $request
+     * @param ProfileCreateRequest $request
      * @return void
      */
-    public function store(ProfileRequest $request): void
+    public function store(ProfileCreateRequest $request): void
     {
         $this->profileService->createNewProfile($request->validated());
     }
