@@ -18,10 +18,9 @@ return new class extends Migration
             $table->string('Author');
             $table->string('Genre');
             $table->string('Publisher');
-            $table->integer('Price');
+            $table->double('Price');
             $table->integer('Rating');
             $table->integer('Number Sold');
-            $table->decimal('Discount');
         });
     }
 

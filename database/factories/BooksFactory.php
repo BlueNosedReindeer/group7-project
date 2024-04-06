@@ -28,7 +28,7 @@ class BooksFactory extends Factory
             'Price' => $this->faker->numberBetween(20,100),
             'Rating' => $this->faker->numberBetween(1,5),
             'Number Sold' => $this->faker->numberBetween(100, 5000),
-            'Discount'=>0,
+            
         ];
     }
 }

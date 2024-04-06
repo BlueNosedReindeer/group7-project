@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Requests\StoreBooksRequest;
 use App\Http\Requests\UpdateBooksRequest;
 use App\Models\Books;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -63,7 +64,7 @@ public function filterByRating($rating)
  public function discountByPublisher(Request $request)
  {
      // Validate the request parameters
-     dd('hi');
+    
      $request->validate([
          'discount_percent' => 'required|numeric|min:0|max:100', // Assuming discount percent is between 0 and 100
          'publisher' => 'required|string', // Assuming publisher is a string
@@ -74,14 +75,12 @@ public function filterByRating($rating)
      $publisher = $request->input('publisher');
 
      // Apply the discount to books under the specified publisher
-     $books = Books::where('publisher', $publisher)->get();
+     $multiplier = (100 - $discountPercent) / 100;
 
-     foreach ($books as $book) {
-         $book->price = $book->price * $discountPercent;
-         $book->save();
-     }
-
-     // Optionally, you can return a response indicating success
+    // Apply the discount to books under the specified publisher
+    Books::where('publisher', $publisher)
+    ->update(['price' => DB::raw('price * ' . $multiplier)]);
+     // Return a response indicating success
      return response()->json(['message' => 'Books discounted successfully']);
  }
 
