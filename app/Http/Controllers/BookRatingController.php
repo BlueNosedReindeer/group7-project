@@ -40,25 +40,21 @@ class BookRatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()// put this back in parameter BookRating $bookRating
+    public function ShowComments($bookId)
     {
-        //
-        return view('bookRating');
+        $Comment = CreateComment::where('bookId', $bookId)->get(['Comment']);
+    
+        return response()->json($Comment);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BookRating $bookRating)
+    public function RatingAverage($bookId)
     {
-        //
-    }
+        $average = BookRating::where('bookId', $bookId)->get(BookRating::avg('Rating'));
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(BookRating $bookRating)
-    {
-        //
+
+        return response()->json($average);
     }
+        
+
+   
 }

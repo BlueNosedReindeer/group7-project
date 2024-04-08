@@ -14,7 +14,7 @@ return new class extends Migration
         //
         Schema::create('book_ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('Rating');
+            $table->integer('Rating');
             $table->string('userId');
             $table->string('bookId');
             $table->timestamps();

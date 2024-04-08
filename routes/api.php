@@ -23,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('CreateRating',[BookRatingController::class, 'CreateRating']);//adding a bookrating to database API -- POST METHOD-- 
 Route::post('CreateComment',[BookRatingController::class, 'CreateComment']);
+Route::get('ShowComments/{bookId}', [BookRatingController::class, 'ShowComments']);
+Route::get('RatingAverage/{bookId}', [BookRatingController::class, 'RatingAverage']);
