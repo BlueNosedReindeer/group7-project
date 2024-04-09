@@ -49,10 +49,11 @@ class BookRatingController extends Controller
 
     public function RatingAverage($bookId)
     {
-        $average = BookRating::where('bookId', $bookId)->get(BookRating::avg('Rating'));
+       $average = BookRating::where('bookId', $bookId)->avg('Rating');
 
+       
 
-        return response()->json($average);
+       return response()->json("The average book rating of bookId $bookId is : $average out of 5");
     }
         
 
